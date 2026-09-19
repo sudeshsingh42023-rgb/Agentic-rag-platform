@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install (test-only deps, skip heavy ML libs in CI)
+        run: |
+          pip install pytest pytest-cov pyyaml
+      - name: Unit tests (metrics, guardrails, chunking -- no model downloads)
+        run: |
+          PYTHONPATH=src pytest tests/test_metrics.py tests/test_guardrails.py \
+            tests/test_chunking.py tests/test_config.py -v
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install ruff
+      - run: ruff check src/ tests/ --output-format=github

@@ -1,0 +1,55 @@
+# Every knob that affects measured quality. An ablation is a diff of this file.
+chunking:
+  strategy: recursive
+  chunk_size: 512
+  chunk_overlap: 64
+  prepend_headings: true
+
+retrieval:
+  mode: hybrid_rerank      # dense | bm25 | hybrid | hybrid_rerank
+  top_k_dense: 20
+  top_k_bm25: 20
+  rrf_k: 60
+  top_k_final: 5
+  reranker_model: cross-encoder/ms-marco-MiniLM-L-6-v2
+  min_rerank_score: null   # set a float to let low-confidence retrieval refuse
+
+embedding:
+  provider: sentence_transformers   # sentence_transformers | openai
+  model: BAAI/bge-small-en-v1.5
+  batch_size: 32
+  query_prefix: "Represent this sentence for searching relevant passages: "
+
+llm:
+  provider: anthropic      # anthropic | openai | ollama
+  model: claude-sonnet-4-5
+  small_model: claude-haiku-4-5
+  judge_model: claude-sonnet-4-5
+  temperature: 0.0
+  max_tokens: 1024
+  timeout_s: 60
+
+graph:
+  enable_planner: true
+  enable_critic: true
+  max_revisions: 2
+  max_subqueries: 4
+
+guardrails:
+  scan_input_pii: true
+  scan_input_injection: true
+  scan_output_pii: true
+  redact: true
+  block_on_injection: true
+
+store:
+  backend: chroma          # chroma | qdrant
+  path: data/index/chroma
+  collection: corpus
+  qdrant_url: http://localhost:6333
+
+tracing:
+  enabled: true
+  service_name: agentic-rag
+  otlp_endpoint: http://localhost:4318/v1/traces
+  console_export: false

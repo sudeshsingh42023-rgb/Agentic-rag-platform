@@ -1,0 +1,3 @@
+{"id": "q001", "question": "What is the minimum CGPA required to be eligible?", "reference_answer": "A candidate must have a consistent academic record with a minimum of 60% (or equivalent CGPA) in X, XII, Diploma, UG and PG.", "relevant_chunk_ids": ["REPLACE_WITH_REAL_CHUNK_ID"], "unanswerable": false}
+{"id": "q002", "question": "Can a student with standing arrears apply?", "reference_answer": "No, students with standing arrears are not eligible to apply.", "relevant_chunk_ids": ["REPLACE_WITH_REAL_CHUNK_ID"], "unanswerable": false}
+{"id": "q003", "question": "What is the refund policy for a cancelled annual gym membership?", "reference_answer": null, "relevant_chunk_ids": [], "unanswerable": true}
